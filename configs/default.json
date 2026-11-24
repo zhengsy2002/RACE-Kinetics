@@ -1,0 +1,79 @@
+{
+  "data": {
+    "raw_csv": "data/kcat.csv",
+    "downstream_csv": "data/cache/dataset/kcat.csv",
+    "prepared_dir": "data/pretrain/reactzyme/prepared",
+    "protein_pretrain_cache": "data/cache/protein/reactzyme",
+    "protein_downstream_cache": "data/cache/protein/kcat",
+    "molformer_cache": "data/cache/molformer",
+    "protein_tsv": "data/pretrain/reactzyme/source/proteins.tsv",
+    "esmc_model": "data/models/esmc",
+    "molformer_model": "data/models/molformer",
+    "reaction_tsv": "data/pretrain/reactzyme/source/reactions.tsv"
+  },
+  "output_dir": "results",
+  "downloads": {
+    "auto_download": true,
+    "esmc_repo_id": "biohub/ESMC-600M-hf",
+    "esmc_revision": "0fb34e7e5fe1f85d0abaa3d35e2671107c0b458c",
+    "molformer_repo_id": "ibm-research/MoLFormer-XL-both-10pct",
+    "molformer_revision": "361063d0ad524ef77cf39b08469f6be770dc550f"
+  },
+  "model": {
+    "protein_dim": 1152,
+    "molecule_dim": 768,
+    "dropout": 0.1,
+    "protein_projection": "residual",
+    "protein_bottleneck": 128
+  },
+  "loss": {
+    "enzyme_reaction": 1.0,
+    "reactant_product": 1.0,
+    "direction": 1.0
+  },
+  "training": {
+    "device": "cuda",
+    "seed": 42,
+    "epochs": 20,
+    "batch_size": 64,
+    "num_workers": 0,
+    "lr": 5e-05,
+    "adapter_lr": 0.0001,
+    "new_head_lr": 0.0001,
+    "weight_decay": 0.0001,
+    "patience": 5,
+    "scheduler_patience": 3
+  },
+  "evaluation": {
+    "batch_size": 128,
+    "n_estimators": 200,
+    "min_samples_leaf": 2,
+    "max_features": 0.3,
+    "n_jobs": -1
+  },
+  "extraction": {
+    "batch_size": 128,
+    "max_length": 202,
+    "max_residues": 2046,
+    "overlap": 128,
+    "model_dtype": "float16",
+    "flush_every": 50
+  },
+  "features": {
+    "mode": "all",
+    "drop_assay": [],
+    "product_missing": false
+  },
+  "holdout": {
+    "random": "data/splits/split_random.csv",
+    "homology": "data/splits/split.csv",
+    "seeds": [
+      42,
+      43,
+      44
+    ]
+  },
+  "supervision": {
+    "direction": "conflict_masked_bce"
+  }
+}

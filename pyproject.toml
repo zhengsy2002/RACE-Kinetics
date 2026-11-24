@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=65"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "race-kinetics"
+version = "1.0.0"
+description = "Reaction-associated pretraining and held-out enzyme kcat prediction"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy", "pandas", "scipy", "scikit-learn", "torch", "rdkit", "joblib", "tqdm"]
+
+[project.optional-dependencies]
+extraction = ["transformers>=5.16,<6", "safetensors", "huggingface-hub>=1.0,<2"]
+
+[project.scripts]
+race-kinetics = "race_kinetics.experiments:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
